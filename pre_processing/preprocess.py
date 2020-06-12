@@ -79,3 +79,11 @@ def group_by_country(data_frame):
         new_country_df = pd.DataFrame(new_row)
         result_data_frame = result_data_frame.append(new_country_df, ignore_index=True)
     return result_data_frame
+
+
+def preprocess(path):
+    df = read_excel(path)
+    df = fill_missing_values_numeric(df)
+    df = z_score_standardization(df)
+    df_grouped = group_by_country(df)
+    return df_grouped
