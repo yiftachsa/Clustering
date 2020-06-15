@@ -15,7 +15,7 @@ df = {}  # dataframe
 def pre_process():
     global df
     df = pp.preprocess(
-        "D:\\Documents\\Studies\\Documents for higher education\\Courses\\Year 3 Semester 2\\מדעי הנתונים ובינה עסקית\\עבודות להגשה\\תרגיל 4\\Dataset.xlsx",
+        "Dataset.xlsx",
         True)  # TODO: Receive from GUI model
 
     print("Preprocessing completed successfully!")  # TODO: print to GUI
@@ -23,8 +23,14 @@ def pre_process():
 
 def cluster():
     global df, output_path
+    output_path = os.getcwd() + '/Output'
+    try:
+        if (os.path.isdir(output_path)==False):
+            os.mkdir(output_path)
+    except OSError:
+        print("Creation of the directory %s failed" % output_path)
     time_stamp = datetime.now().strftime("%d-%m-%Y")
-    output_path = os.getcwd() + '/Output/' + time_stamp
+    output_path = output_path + '/' + time_stamp
     try:
         if (os.path.isdir(output_path)):
             shutil.rmtree(output_path)
@@ -32,8 +38,8 @@ def cluster():
     except OSError:
         print("Creation of the directory %s failed" % output_path)
 
-    n_clusters = 3  # default=8 TODO: Receive from GUI model
-    n_init = 10  # default=10 TODO: Receive from GUI model
+    n_clusters = 3  # default=8 TODO: Receive from GUI model >0
+    n_init = 10  # default=10 TODO: Receive from GUI model >0
 
     df = KMeans.k_means_cluster(df, n_clusters, n_init)
     # TODO: Check if the real values are needed for display(and not after standardization) if so - write another
