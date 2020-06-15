@@ -81,9 +81,11 @@ def group_by_country(data_frame):
     return result_data_frame
 
 
-def preprocess(path):
+def preprocess(path, normalize):
     df = read_excel(path)
     df = fill_missing_values_numeric(df)
-    df = z_score_standardization(df)
+    if (normalize):
+        df = z_score_standardization(df)
     df_grouped = group_by_country(df)
     return df_grouped
+
