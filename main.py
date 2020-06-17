@@ -5,14 +5,14 @@ from Visualization import maps
 from datetime import datetime
 import os
 import shutil
+from GUI import gui2 as guiClass
 
-# from GUI import gui2 as gui
 
-
-# TODO: start GUI model
-# datetime string containing current date and time
 output_path = ""
 df = {}  # dataframe
+
+
+
 
 
 def pre_process(pathFromGui):
@@ -56,6 +56,14 @@ def cluster(clusterInput, runInput):
     maps.plot_choropleth_map(df, output_path)
 
     return output_path;
+
+
+def start():
+    if __name__ == '__main__':
+        guiClass.main()
+
+
+start()
 
 
 # for Clusters analysis
