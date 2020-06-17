@@ -1,5 +1,7 @@
 from tkinter import Tk, Label, Button, Entry, IntVar, END, W, E
 
+#from tkinter.constants import Tk, Label
+import re
 
 class Panel:
 
