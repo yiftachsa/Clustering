@@ -5,7 +5,8 @@ from Visualization import maps
 from datetime import datetime
 import os
 import shutil
-#from GUI import gui2 as gui
+
+# from GUI import gui2 as gui
 
 
 # TODO: start GUI model
@@ -13,28 +14,24 @@ import shutil
 output_path = ""
 df = {}  # dataframe
 
-def checkInputFromGui(num):
-    print(num);
-    print("tada");
-
-
-
 
 def pre_process(pathFromGui):
     global df
     df = pp.preprocess(
-    pathFromGui,
-    #"Dataset.xlsx",
-        True)  # TODO: Receive from GUI model
+        pathFromGui,
+        True)
 
-    print("Preprocessing completed successfully!")  # TODO: print to GUI
+def getDataFrameLength():
+    global df
+    return len(df)
+
 
 
 def cluster(clusterInput, runInput):
     global df, output_path
     output_path = os.getcwd() + '/Output'
     try:
-        if (os.path.isdir(output_path)==False):
+        if (os.path.isdir(output_path) == False):
             os.mkdir(output_path)
     except OSError:
         print("Creation of the directory %s failed" % output_path)
@@ -47,28 +44,19 @@ def cluster(clusterInput, runInput):
     except OSError:
         print("Creation of the directory %s failed" % output_path)
 
-    # n_clusters = 3  # default=8 TODO: Receive from GUI model >0
-    # n_init = 10  # default=10 TODO: Receive from GUI model >0
-
     n_clusters = int(clusterInput)  # default=8
     n_init = int(runInput)  # default=10
 
     df = KMeans.k_means_cluster(df, n_clusters, n_init)
-    # TODO: Check if the real values are needed for display(and not after standardization) if so - write another
-    #  function in pre-process with out the standardization line.
+    # if the real values are needed for display(and not after standardization) then run
+    # pp.preprocess function with false the standardization line.
 
     scatter.plot_scatter(df, 'Social support', 'Generosity', 'Social support', 'Generosity',
                          'Generosity in dependence of Social support', 'cluster', output_path)
     maps.plot_choropleth_map(df, output_path)
-    # TODO: Display results
-    # TODO: Display new dialog with "Clustering completed" with an ok button
 
     return output_path;
 
-
-#gui.main()
-# pre_process()
-# cluster()
 
 # for Clusters analysis
 #
